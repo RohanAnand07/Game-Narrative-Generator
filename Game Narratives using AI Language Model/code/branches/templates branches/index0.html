@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Game Narratives Generator</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      padding: 20px;
+      text-align: center;
+    }
+  
+    .fade {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+  
+    .fade.show {
+      opacity: 1;
+    }
+  
+    #intro-text {
+      font-size: 24px;
+      line-height: 1.5;
+    }
+  
+    .character-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .character-option {
+      cursor: pointer;
+      margin: 20px;
+      padding: 20px;
+      border: 2px solid white;
+      max-width: 400px;
+    }
+  
+    .character-option:hover {
+      background-color: gray;
+    }
+  
+    .character-option h3 {
+      margin-top: 0;
+    }
+  
+    /* Updated styles for narrative screen */
+    #narrative-screen {
+      opacity: 0; /* Start with opacity set to 0 */
+      transition: opacity 0.5s ease-in-out; /* Add a transition effect for opacity changes */
+      position: relative; /* Ensure position is set */
+      z-index: 9999; /* Ensure a high z-index value */
+      height: 100vh; /* Ensure that the content fits within the viewport */
+    }
+  
+    #narrative-screen.show {
+      opacity: 1; /* When the show class is added, set opacity to 1 */
+    }
+  
+    #narrative-output {
+      display: block !important;
+      text-align: left;
+      margin-top: 20px;
+      padding: 20px;
+      border: 2px solid white;
+      color: white; /* Add this line to set the text color */
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="fade" id="intro-screen">
+    <h1 id="intro-text"></h1>
+  </div>
+
+  <div class="fade" id="choose-character-screen">
+    <h2>Choose your character:</h2>
+    <div class="character-options">
+      <div class="character-option" data-character="Elena">
+        <h3>Elena "Swift" Martinez</h3>
+        <p>A former parkour athlete turned rogue scavenger, Elena is unmatched in agility and quick thinking. Her ability to traverse obstacles with grace and speed makes her an ideal scout. Elena's wit and resourcefulness have kept her alive in the harshest of conditions.</p>
+      </div>
+      <div class="character-option" data-character="Malik">
+        <h3>Malik "Steelshot" Khan</h3>
+        <p>A former soldier with a heart of gold, Malik wields a crossbow with unparalleled precision. His calm demeanor masks a burning desire to protect the vulnerable. Equipped with survivalist knowledge, he can heal wounds and mend broken spirits.</p>
+      </div>
+      <div class="character-option" data-character="Maya">
+        <h3>Maya "Specter" Nguyen</h3>
+        <p>A brilliant scientist before the fall of society, Maya now wields her intellect to manipulate technology and shape the battlefield. Armed with gadgets and tactical expertise, she can hack into enemy systems and provide vital support to her team.</p>
+      </div>
+      <div class="character-option" data-character="Darius">
+        <h3>Darius "Viper" Santiago</h3>
+        <p>A charming rogue with a mysterious past, Darius is a master of stealth and guile. He navigates the shadows with ease, his blade always ready. Darius' cunning mind and silver tongue can manipulate situations to his advantage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade" id="loading-screen">
+    <h2>Loading...</h2>
+  </div>
+
+  <div class="fade" id="narrative-screen">
+  <div id="narrative-output"></div>
+  </div>
+
+  <script>
+    const introScreen = document.getElementById('intro-screen');
+    const introText = document.getElementById('intro-text');
+    const chooseCharacterScreen = document.getElementById('choose-character-screen');
+    const characterOptions = document.querySelectorAll('.character-option');
+    const loadingScreen = document.getElementById('loading-screen');
+    const narrativeScreen = document.getElementById('narrative-screen');
+    const narrativeOutput = document.getElementById('narrative-output');
+
+    function typeWriter(element, text, delay, callback) {
+      let index = 0;
+      const typeInterval = setInterval(() => {
+        element.textContent += text.charAt(index);
+        index++;
+        if (index === text.length) {
+          clearInterval(typeInterval);
+          setTimeout(callback, delay);
+        }
+      }, 50);
+    }
+
+    function fadeScreen(screen) {
+  const screens = document.getElementsByClassName('fade');
+  for (let i = 0; i < screens.length; i++) {
+    screens[i].classList.remove('show');
+  }
+  screen.classList.add('show');
+}
+
+
+function handleCharacterClick(character) {
+  fadeScreen(narrativeScreen);
+  generateNarrative(character); // Call the function to generate the narrative
+}
+    
+
+    function generateNarrative(character) {
+      const narrativePrompt = `You are ${character}, standing in a post-apocalyptic world. Describe the situation and provide two options to continue the story.`;
+
+      // Make an API call to your Flask server to generate the narrative
+      fetch('/generate_narrative', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          choice: character,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Display the generated narrative in the narrative-output element
+          narrativeOutput.textContent = data.narrative;
+          console.log("Generated narrative:", data.narrative);
+          
+          // Show the narrative screen
+        
+         
+          fadeScreen(narrativeScreen);
+      
+        })
+        .catch(error => {
+          console.error('Error generating narrative:', error);
+        });
+    }
+
+    introScreen.classList.add('show');
+    typeWriter(introText, 'Welcome to the Game Narratives Generator!', 2000, () => {
+      fadeScreen(chooseCharacterScreen);
+    });
+
+    characterOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const character = option.getAttribute('data-character');
+        handleCharacterClick(character);
+      });
+    });
+  </script>
+</body>
+</html>

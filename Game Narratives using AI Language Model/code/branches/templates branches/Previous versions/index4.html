@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Narrative Generator</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      padding: 20px;
+    }
+    
+    .fade {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+    
+    .fade.show {
+      opacity: 1;
+    }
+    
+    .command-prompt {
+      margin-bottom: 20px;
+    }
+    
+    .command-prompt input {
+      background-color: transparent;
+      border: none;
+      color: white;
+      width: 100%;
+      outline: none;
+    }
+    
+    .output {
+      margin-bottom: 10px;
+    }
+    
+    .option {
+      cursor: pointer;
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+    
+    .option:hover {
+      background-color: gray;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .btn-container .option {
+      flex: 0 0 48%;
+    }
+  </style>
+</head>
+<body>
+  <div class="fade" id="welcome-screen">
+    <h1>Welcome to the Game Narrative Generator!</h1>
+  </div>
+
+  <div class="fade" id="start-options-screen">
+    <h2>We are giving you two options:</h2>
+    <div class="btn-container">
+      <div class="option" onclick="handleOptionClick('leave-things')">Leave Things to Chance</div>
+      <div class="option" onclick="handleOptionClick('start-plot')">Start with a Plot in Your Mind</div>
+    </div>
+  </div>
+
+  <div class="fade" id="leave-things-screen">
+    <div class="command-prompt">
+      <div class="output">You have chosen to leave things to chance. Brace yourself for a thrilling, unpredictable journey!</div>
+    </div>
+  </div>
+
+  <div class="fade" id="start-plot-screen">
+    <div class="command-prompt">
+      <div class="output">You chose to start with a plot in your mind. Prepare to craft a unique and exciting story!</div>
+      <br>
+      <div class="output">Please select an option:</div>
+      <div class="option">Choose your character</div>
+      <div class="option">Select historical timeline</div>
+      <div class="option">Define character traits</div>
+      <div class="option">Choose where the story begins</div>
+      <div class="option">Specify how the story is beginning</div>
+      <input id="plot-option-input" type="text" />
+    </div>
+  </div>
+
+  <script>
+    // Function to fade in and out screens
+    function fadeScreen(screenId) {
+      const screens = document.getElementsByClassName('fade');
+      for (let i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('show');
+      }
+      const screen = document.getElementById(screenId);
+      screen.classList.add('show');
+    }
+
+    // Function to handle user option click
+    function handleOptionClick(option) {
+      if (option === 'leave-things') {
+        fadeScreen('leave-things-screen');
+      } else if (option === 'start-plot') {
+        fadeScreen('start-plot-screen');
+      }
+    }
+
+    // Event listener for the start with plot screen
+    const plotOptionInput = document.getElementById('plot-option-input');
+    plotOptionInput.addEventListener('keypress', (event) => {
+      handleInput(event, 'start-plot-screen', 'start-plot-screen');
+    });
+
+    // Initial fade-in animation
+    fadeScreen('welcome-screen');
+    setTimeout(() => fadeScreen('start-options-screen'), 2000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Game Narratives Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #prompt {
+            width: 80%;
+            padding: 10px;
+        }
+        #generate-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Narratives Generator</h1>
+    <textarea id="prompt" placeholder="Enter your narrative prompt here..."></textarea>
+    <br>
+    <button id="generate-button">Generate Narrative</button>
+    <div id="output"></div>
+    <script>
+        document.getElementById('generate-button').addEventListener('click', async () => {
+            const prompt = document.getElementById('prompt').value;
+    
+            const response = await fetch('/generate_narrative', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            });
+    
+            const data = await response.json();
+            document.getElementById('output').textContent = data.narrative;
+        });
+    </script>    
+</body>
+</html>

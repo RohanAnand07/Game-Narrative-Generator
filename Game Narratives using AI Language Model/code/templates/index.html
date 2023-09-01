@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Game Narratives Generator</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+  <div class="fade" id="intro-screen">
+    <h1 id="intro-text"></h1>
+  </div>
+
+  <div class="fade" id="choose-character-screen">
+    <h2>Choose your character:</h2>
+    <div class="character-options">
+      <div class="character-option" data-character="Elena">
+        <h3>Elena "Swift" Martinez</h3>
+        <p>A former parkour athlete turned rogue scavenger, Elena is unmatched in agility and quick thinking. Her ability to traverse obstacles with grace and speed makes her an ideal scout. Elena's wit and resourcefulness have kept her alive in the harshest of conditions.</p>
+      </div>
+      <div class="character-option" data-character="Malik">
+        <h3>Malik "Steelshot" Khan</h3>
+        <p>A former soldier with a heart of gold, Malik wields a crossbow with unparalleled precision. His calm demeanor masks a burning desire to protect the vulnerable. Equipped with survivalist knowledge, he can heal wounds and mend broken spirits.</p>
+      </div>
+      <div class="character-option" data-character="Maya">
+        <h3>Maya "Specter" Nguyen</h3>
+        <p>A brilliant scientist before the fall of society, Maya now wields her intellect to manipulate technology and shape the battlefield. Armed with gadgets and tactical expertise, she can hack into enemy systems and provide vital support to her team.</p>
+      </div>
+      <div class="character-option" data-character="Darius">
+        <h3>Darius "Viper" Santiago</h3>
+        <p>A charming rogue with a mysterious past, Darius is a master of stealth and guile. He navigates the shadows with ease, his blade always ready. Darius' cunning mind and silver tongue can manipulate situations to his advantage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade" id="loading-screen">
+    <h2>Loading...</h2>
+  </div>
+
+  <div class="fade" id="narrative-screen">
+    <div id="narrative-output"></div>
+  </div>
+
+  <script src="{{ url_for('static', filename='scripts/scripts.js') }}"></script>
+</body>
+</html>

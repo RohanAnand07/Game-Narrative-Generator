@@ -1,0 +1,39 @@
+{
+  "title": "Mysteries of the Lost City",
+  "start": {
+    "text": "You wake up in an ancient, overgrown city. The air is thick with mystery and danger. You have two choices:",
+    "options": [
+      "Explore the crumbling buildings to uncover the city's secrets.",
+      "Search for a way to escape the city and return home."
+    ]
+  },
+  "explore": {
+    "text": "As you delve deeper into the city's heart, you discover a hidden chamber. Inside, a mystical artifact awaits. Your choices:",
+    "options": [
+      "Touch the artifact and unlock its power.",
+      "Leave the artifact untouched and continue exploring."
+    ]
+  },
+  "unlock_power": {
+    "text": "The artifact imbues you with incredible abilities, but it comes at a price. Your choices:",
+    "options": [
+      "Embrace the power and become the guardian of the city.",
+      "Reject the power and seek a way to destroy the artifact."
+    ]
+  },
+  "destroy_artifact": {
+    "text": "You discover a ritual that can destroy the artifact. Performing it will require a dangerous journey. Your choices:",
+    "options": [
+      "Gather allies and embark on the perilous journey.",
+      "Abandon the quest and accept the consequences of the artifact's power."
+    ]
+  },
+  "end_guardian": {
+    "text": "You become the guardian of the lost city, using your powers to protect it from those who seek to misuse it. Your story continues...",
+    "options": []
+  },
+  "end_destroy": {
+    "text": "You successfully destroy the artifact, saving the world from its dangerous influence. Your story continues...",
+    "options": []
+  }
+}

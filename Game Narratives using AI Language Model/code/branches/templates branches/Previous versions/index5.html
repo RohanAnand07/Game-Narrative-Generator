@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Narrative Generator</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      padding: 20px;
+    }
+    
+    .fade {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+    
+    .fade.show {
+      opacity: 1;
+    }
+    
+    .command-prompt {
+      margin-bottom: 20px;
+    }
+    
+    .command-prompt input {
+      background-color: transparent;
+      border: none;
+      color: white;
+      width: 100%;
+      outline: none;
+    }
+    
+    .output {
+      margin-bottom: 10px;
+    }
+    
+    .option {
+      cursor: pointer;
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+    
+    .option:hover {
+      background-color: gray;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .btn-container .option {
+      flex: 0 0 48%;
+    }
+  </style>
+</head>
+<body>
+  <div class="fade" id="welcome-screen">
+    <h1 id="welcome-message"></h1>
+  </div>
+
+  <div class="fade" id="start-options-screen">
+    <h2>We are giving you two options:</h2>
+    <div class="btn-container">
+      <div class="option" onclick="handleOptionClick('leave-things')">Leave Things to Chance</div>
+      <div class="option" onclick="handleOptionClick('start-plot')">Start with a Plot in Your Mind</div>
+    </div>
+  </div>
+
+  <div class="fade" id="leave-things-screen">
+    <div class="command-prompt">
+      <div class="output" id="leave-things-output"></div>
+    </div>
+  </div>
+
+  <div class="fade" id="start-plot-screen">
+    <div class="command-prompt">
+      <div class="output" id="start-plot-output"></div>
+      <br>
+      <div class="output" id="start-plot-options" style="display: none;">
+        Please select an option:
+        <br>
+        <div class="option"><br>Choose your character</div>
+        <div class="option">Select historical timeline</div>
+        <div class="option">Define character traits</div>
+        <div class="option">Choose where the story begins</div>
+        <div class="option">Specify how the story is beginning</div>
+      </div>
+      <input id="plot-option-input" type="text" style="display: none;" />
+    </div>
+  </div>
+
+  <script>
+    // Function to fade in and out screens
+    function fadeScreen(screenId) {
+      const screens = document.getElementsByClassName('fade');
+      for (let i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('show');
+      }
+      const screen = document.getElementById(screenId);
+      screen.classList.add('show');
+    }
+
+    // Function to handle user option click
+    function handleOptionClick(option) {
+      if (option === 'leave-things') {
+        fadeScreen('leave-things-screen');
+      } else if (option === 'start-plot') {
+        fadeScreen('start-plot-screen');
+        setTimeout(function() {
+          document.getElementById('start-plot-options').style.display = 'block';
+          document.getElementById('plot-option-input').style.display = 'block';
+        }, 4000);
+      }
+    }
+
+    // Typewriter effect for welcome message
+    const welcomeMessage = document.getElementById('welcome-message');
+    const welcomeText = 'Welcome to the Game Narratives Generator!';
+    let welcomeIndex = 0;
+
+    function typeWriter() {
+      if (welcomeIndex < welcomeText.length) {
+        welcomeMessage.innerHTML += welcomeText.charAt(welcomeIndex);
+        welcomeIndex++;
+        setTimeout(typeWriter, 50);
+      } else {
+        fadeScreen('start-options-screen');
+      }
+    }
+
+    // Typewriter effect for other lines
+    function typeWriterLines(outputId, text, delay) {
+      const output = document.getElementById(outputId);
+      let index = 0;
+
+      function type() {
+        if (index < text.length) {
+          output.innerHTML += text.charAt(index);
+          index++;
+          setTimeout(type, 50);
+        }
+      }
+
+      setTimeout(type, delay);
+    }
+
+    // Initial fade-in animation
+    fadeScreen('welcome-screen');
+    typeWriter();
+
+    // Delayed typewriter effect for other lines
+    typeWriterLines('leave-things-output', 'You have chosen to leave things to chance. Brace yourself for a thrilling, unpredictable journey!', 3000);
+    typeWriterLines('start-plot-output', 'You chose to start with a plot in your mind. Prepare to craft a unique and exciting story!', 4000);
+  </script>
+</body>
+</html>

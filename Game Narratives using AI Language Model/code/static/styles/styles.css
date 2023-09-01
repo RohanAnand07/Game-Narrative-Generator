@@ -1,0 +1,83 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .fade {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+  
+  .fade.show {
+    opacity: 1;
+  }
+  
+  #intro-text {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+  
+  .character-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .character-option {
+    cursor: pointer;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid white;
+    max-width: 400px;
+  }
+  
+  .character-option:hover {
+    background-color: gray;
+  }
+  
+  .character-option h3 {
+    margin-top: 0;
+  }
+  
+  /* Updated styles for narrative screen */
+  #narrative-screen {
+    opacity: 0; /* Start with opacity set to 0 */
+    transition: opacity 0.5s ease-in-out; /* Add a transition effect for opacity changes */
+    position: relative; /* Ensure position is set */
+    z-index: 9999; /* Ensure a high z-index value */
+    height: 100vh; /* Ensure that the content fits within the viewport */
+  }
+  
+  #narrative-screen.show {
+    opacity: 1; /* When the show class is added, set opacity to 1 */
+  }
+  
+  #narrative-output {
+    display: block !important;
+    text-align: left;
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid white;
+    color: white; /* Add this line to set the text color */
+  }
+  
+  /* Loading screen styles */
+  #loading-screen {
+    display: none; /* Start with display set to none */
+    position: fixed; /* Fixed position to cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    z-index: 9999; /* Ensure a high z-index value to show above other content */
+    color: white; /* Text color */
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
